@@ -1,10 +1,21 @@
-// find
-// Получи объект пользователя (не массив) по уникальному значению свойства email.
+// reduce, filter, sort
+// Получи массив всех умений всех пользователей(поле skills),
+//     при этом не должно быть повторяющихся умений и они должны быть отсортированы в алфавитном порядке.
 
-// Используй деструктурирующее присваивание для параметра функции ({email}) без пробелов и переносов на новую строку.
+// Слияние массивов:
 
+// const odd = [1, 3, 5];
+// const even = [2, 4, 6];
+
+// // 1
+// [...odd, ...even];
+// //  [1, 3, 5, 2, 4, 6]
+
+// // 2
+// odd.concat(even)
+// //  [1, 3, 5, 2, 4, 6]
 // Используй только перебирающие методы массива которые не изменяют(не мутируют) исходный массив.
-//   Т.е.нельзя использовать for, splice, push и т.п.мутирующие методы.find
+//     Т.е.нельзя использовать for, splice, push и т.п.мутирующие методы.
 
 const users = [
   {
@@ -92,8 +103,21 @@ const users = [
     age: 39,
   },
 ];
-
-const getUserWithEmail = (array, mail) =>
-  array.find(({ email }) => email === mail);
-
-console.log(getUserWithEmail(users, "rossvazquez@xinware.com"));
+const getSortedUniqueSkills = (array) =>
+  [...array]
+    .map(({ skills }) => skills)
+    .reduce((acc, value) => acc.concat(value))
+    .filter(
+      (value, index, skillsArray) => skillsArray.indexOf(value) === index
+    );
+console.log(getSortedUniqueSkills(users));
+/* [ 'adipisicing', 'amet',
+ 'anim', 'commodo',
+ 'culpa', 'elit',
+ 'ex', 'ipsum',
+ 'irure', 'laborum',
+ 'lorem', 'mollit',
+ 'non', 'nostrud',
+ 'nulla', 'proident',
+ 'tempor', 'velit',
+ 'veniam' ]; */

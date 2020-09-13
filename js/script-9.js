@@ -1,133 +1,120 @@
-// Есть массив logins с логинами пользователей.
-// Напиши скрипт добавления логина в массив logins.Добавляемый логин должен:
+// sort и map
+// Получи массив имен(поле name) людей, отсортированных в зависимости от количества их друзей(поле friends)
 
-// проходить проверку на длину от 4 до 16 - ти символов включительно
-// быть уникален, то есть отсутствовать в массиве logins
-// Разбей задачу на подзадачи с помощью функций.
-// Проверку на отсутствие аргументов или на правильный тип аргументов делать не нужно.
+// Избегаем мутации исходного массива: т.к.метод sort изменяет(мутирует) исходный массив,
+//   то следует сделать копию массива и сортировать уже копию, а не исходный массив.
 
-// Напиши функцию isLoginValid(login), в которой проверь количество символов параметра login
-// и верни true или false в зависимости от того,
-// попадает ли длина параметра в заданный диапазон от 4 - х до 16 - ти символов включительно.
+// Копирование массива:
 
-// Напиши функцию isLoginUnique(allLogins, login),
-// которая принимает список всех логинов и добавляемый логин как параметры
-// и проверяет наличие login в массиве allLogins,
-// возвращая true если такого логина еще нет и false если логин уже используется.
+// const arr = [1, 3, 5];
 
-// Напиши функцию addLogin(allLogins, login) которая:
+// // 1
+// const first = [...arr];
 
-// Принимает новый логин и массив всех логинов как параметры
-// Проверяет валидность логина используя вспомогательную функцию isLoginValid
-// Если логин не валиден, прекратить исполнение функции addLogin и вернуть строку
-// 'Ошибка! Логин должен быть от 4 до 16 символов'
-// Если логин валиден, функция addLogin проверяет уникальность логина с помощью функции isLoginUnique
-// Если isLoginUnique вернет false, тогда addLogin не добавляет логин в массив и возвращает строку
-// 'Такой логин уже используется!'
-// Если isLoginUnique вернет true, addLogin добавляет новый логин в logins и возвращает строку
-// 'Логин успешно добавлен!'
-// 🔔 Принцип единственной ответственности функции - каждая функция делает что - то одно.
-// Это позволяет переиспользовать код и изменять логику работы функции только в одном месте,
-// не затрагивая работу программы в целом.
+// // 2
+// const second = arr.slice();
 
-// Предикатные функции возвращают только true или false.
-// Такие функции принято называть начиная с is: isLoginUnique и isLoginValid в нашем случае.
+// // 3
+// const third = arr.concat();
+// Используй деструктурирующее присваивание для параметра функции({ name })` без пробелов и переносов на новую строку
 
-// isLoginUnique только проверяет есть ли такой логин в массиве и возвращает true или false.
-// isLoginValid только проверяет валидный ли логин и возвращает true или false.
-// addLogin добавляет или не добавляет логин в массив.
-// При этом для проверок условия добавления использует результаты вызовов других функций - isLoginUnique и isLoginValid.
+// Используй только перебирающие методы массива которые не изменяют (не мутируют) исходный массив.
+//  Т.е. нельзя использовать for, splice, push и т.п. мутирующие методы.
 
-// function isLoginValid(login, min = 4, max = 16) {
-//   // Write code under this line
-//   let isLoginValid = false;
-//   if (login.length >= min && login.length <= max) {
-//     isLoginValid = true;
-//   }
-//   return isLoginValid;
-// }
-// function isLoginUnique(allLogins, login) {
-//   "use strict";
-//   // Write code under this line
-//   let isLoginUnique = true;
-//   for (const element of allLogins) {
-//     if (login === element) {
-//       isLoginUnique = false;
-//     }
-//   }
-//   return isLoginUnique;
-// }
-// function addLogin(allLogins, login) {
-//   "use strict";
-//   const SUCCESS = "Логин успешно добавлен!";
-//   const REFUSAL = "Такой логин уже используется!";
-//   const ERROR = "Ошибка! Логин должен быть размером от 4 до 16 символов";
-//   let message;
-//   // Write code under this line
-//   if (isLoginValid(login)) {
-//   } else {
-//     message = ERROR;
-//     return message;
-//   }
-//   if (isLoginUnique(allLogins, login)) {
-//     allLogins.push(login);
-//     message = SUCCESS;
-//     //console.log(message);
-//   } else {
-//     message = REFUSAL;
-//     //console.log(message);
-//   }
-//   return message;
-// }
-// const logins = ["Mango", "robotGoogles", "Poly", "Aj4x1sBozz", "qwerty123"];
-// const logins = ["1234", "12345"];
-// console.log(addLogin(logins, "789"));
+const users = [
+  {
+    id: "701b29c3-b35d-4cf1-a5f6-8b12b29a5081",
+    name: "Moore Hensley",
+    email: "moorehensley@indexia.com",
+    eyeColor: "blue",
+    friends: ["Sharron Pace"],
+    isActive: false,
+    balance: 2811,
+    skills: ["ipsum", "lorem"],
+    gender: "male",
+    age: 37,
+  },
+  {
+    id: "7a3cbd18-57a1-4534-8e12-1caad921bda1",
+    name: "Sharlene Bush",
+    email: "sharlenebush@tubesys.com",
+    eyeColor: "blue",
+    friends: ["Briana Decker", "Sharron Pace"],
+    isActive: true,
+    balance: 3821,
+    skills: ["tempor", "mollit", "commodo", "veniam", "laborum"],
+    gender: "female",
+    age: 34,
+  },
+  {
+    id: "88beb2f3-e4c2-49f3-a0a0-ecf957a95af3",
+    name: "Ross Vazquez",
+    email: "rossvazquez@xinware.com",
+    eyeColor: "green",
+    friends: ["Marilyn Mcintosh", "Padilla Garrison", "Naomi Buckner"],
+    isActive: false,
+    balance: 3793,
+    skills: ["nulla", "anim", "proident", "ipsum", "elit"],
+    gender: "male",
+    age: 24,
+  },
+  {
+    id: "249b6175-5c30-44c6-b154-f120923736f5",
+    name: "Elma Head",
+    email: "elmahead@omatom.com",
+    eyeColor: "green",
+    friends: ["Goldie Gentry", "Aisha Tran"],
+    isActive: true,
+    balance: 2278,
+    skills: ["adipisicing", "irure", "velit"],
+    gender: "female",
+    age: 21,
+  },
+  {
+    id: "334f8cb3-eb04-45e6-abf4-4935dd439b70",
+    name: "Carey Barr",
+    email: "careybarr@nurali.com",
+    eyeColor: "blue",
+    friends: ["Jordan Sampson", "Eddie Strong"],
+    isActive: true,
+    balance: 3951,
+    skills: ["ex", "culpa", "nostrud"],
+    gender: "male",
+    age: 27,
+  },
+  {
+    id: "150b00fb-dd82-427d-9faf-2879ea87c695",
+    name: "Blackburn Dotson",
+    email: "blackburndotson@furnigeer.com",
+    eyeColor: "brown",
+    friends: ["Jacklyn Lucas", "Linda Chapman"],
+    isActive: false,
+    balance: 1498,
+    skills: ["non", "amet", "ipsum"],
+    gender: "male",
+    age: 38,
+  },
+  {
+    id: "e1bf46ab-7168-491e-925e-f01e21394812",
+    name: "Sheree Anthony",
+    email: "shereeanthony@kog.com",
+    eyeColor: "brown",
+    friends: ["Goldie Gentry", "Briana Decker"],
+    isActive: true,
+    balance: 2764,
+    skills: ["lorem", "veniam", "culpa"],
+    gender: "female",
+    age: 39,
+  },
+];
 
-function isLoginValid(login, min = 4, max = 16) {
-  let isLoginValid = login.length >= min && login.length <= max;
-  return isLoginValid;
-}
+// Write code under this line
+// Write code under this line
+const getNamesSortedByFriendsCount = (array) =>
+  [...array]
+    .sort((a, b) => a.friends.length - b.friends.length)
+    .map(({ name }) => name);
 
-function isLoginUnique(allLogins, login) {
-  "use strict";
-  let isLoginUnique;
-  if (allLogins.includes(login)) {
-    isLoginUnique = false;
-    return isLoginUnique;
-  }
-  isLoginUnique = true;
-  return isLoginUnique;
-}
-
-function addLogin(allLogins, login) {
-  "use strict";
-  const SUCCESS = "Логин успешно добавлен!";
-  const REFUSAL = "Такой логин уже используется!";
-  const ERROR = "Ошибка! Логин должен быть размером от 4 до 16 символов";
-  let message;
-  if (!isLoginUnique(allLogins, login) === true) {
-    message = REFUSAL;
-    return message;
-  } else if (isLoginValid(login) === false) {
-    message = ERROR;
-    return message;
-  } else {
-    allLogins.push(login);
-    message = SUCCESS;
-    return message;
-  }
-}
-
-const logins = ["Mango", "robotGoogles", "Poly", "Aj4x1sBozz", "qwerty123"];
-
-console.log(addLogin(logins, "Ajax"));
-// 'Логин успешно добавлен!'
-
-console.log(addLogin(logins, "robotGoogles"));
-// 'Такой логин уже используется!'
-
-console.log(addLogin(logins, "Zod"));
-// 'Ошибка! Логин должен быть от 4 до 16 символов'
-
-console.log(addLogin(logins, "jqueryisextremelyfast"));
-// 'Ошибка! Логин должен быть от 4 до 16 символов'
+console.log(getNamesSortedByFriendsCount(users));
+// [ 'Moore Hensley', 'Sharlene Bush', 'Elma Head', 'Carey Barr',
+// 'Blackburn Dotson', 'Sheree Anthony', 'Ross Vazquez' ]
