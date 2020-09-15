@@ -103,13 +103,12 @@ const users = [
     age: 39,
   },
 ];
+
 const getSortedUniqueSkills = (array) =>
-  [...array]
-    .map(({ skills }) => skills)
-    .reduce((acc, value) => acc.concat(value))
-    .filter(
-      (value, index, skillsArray) => skillsArray.indexOf(value) === index
-    );
+  array
+    .reduce((acc, { skills }) => [...acc, ...skills], [])
+    .filter((item, pos, array) => array.indexOf(item) === pos)
+    .sort();
 console.log(getSortedUniqueSkills(users));
 /* [ 'adipisicing', 'amet',
  'anim', 'commodo',
